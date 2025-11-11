@@ -18,7 +18,10 @@
                      Text="{Binding SerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button Content="Load Files" Width="100" Margin="8,0,0,0"
                     Click="LoadFiles_Click"/>
+            <Button Content="Check / Uncheck All" Width="150" Margin="8,0,0,0"
+                    Click="SelectAll_Click"/>
         </StackPanel>
+
 
         <ListView Grid.Row="1" ItemsSource="{Binding Files}" Name="FilesList" Margin="12" SelectionMode="Extended">
             <ListView.View>
