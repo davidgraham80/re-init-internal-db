@@ -34,7 +34,7 @@ namespace SendCheck.Poco
                 return await Task.Run(() =>
                 {
                     // inputs
-                    string navSyncVersion = "4.14.1.1024"; // TODO: supply real value
+                    string navSyncVersion = "4.14.1.1024";
 
                     try
                     {

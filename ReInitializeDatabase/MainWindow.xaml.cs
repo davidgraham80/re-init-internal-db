@@ -84,5 +84,43 @@ namespace ReInitializeDatabase
                 VM.Files.Add(new FileChoice { FileName = f.FileName, FileSize = f.FileSize, Source = f });
         }
 
+        private async void Send_Click(object sender, RoutedEventArgs e)
+        {
+            // Collect checked files
+            var selectedFiles = VM.Files.Where(f => f.IsChecked).ToList();
+            if (!selectedFiles.Any())
+            {
+                MessageBox.Show("Please select at least one file to send.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(VM.SerialNumber))
+            {
+                MessageBox.Show("Please enter a serial number first.");
+                return;
+            }
+
+            try
+            {
+                string navSyncVersion = "4.14.1.1024";
+
+                var svc = new InternalDbService(
+                    "http://navserver2.navtor.com/ENCSync.svc",
+                    VM.SerialNumber);
+
+                List<InternalDBFile> internalFiles = selectedFiles
+                                                     .Select(f => (InternalDBFile)f.Source)
+                                                     .ToList();
+
+                await svc.SendAsync(internalFiles);
+
+                MessageBox.Show($"{internalFiles.Count} file(s) sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Send failed:\n{ex.Message}");
+            }
+        }
+
     }
 }

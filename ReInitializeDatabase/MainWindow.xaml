@@ -20,6 +20,8 @@
                     Click="LoadFiles_Click"/>
             <Button Content="Check / Uncheck All" Width="150" Margin="8,0,0,0"
                     Click="SelectAll_Click"/>
+            <Button Content="Send" Width="100" Margin="8,0,0,0"
+                    Click="Send_Click"/>
         </StackPanel>
 
 
