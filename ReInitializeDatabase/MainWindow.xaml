@@ -7,6 +7,31 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <ListView ItemsSource="{Binding Files}" Name="FilesList" Margin="12" SelectionMode="Extended">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="36">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="File name" Width="380"
+                                    DisplayMemberBinding="{Binding FileName}" />
+
+                    <GridViewColumn Header="Size (bytes)" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding FileSize, StringFormat={}{0:N0}}"
+                                           HorizontalAlignment="Right"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>

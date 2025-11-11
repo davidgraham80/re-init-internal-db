@@ -34,6 +34,13 @@ namespace ReInitializeDatabase
         async Task LoadAsync()
         {
             var svc = new  InternalDbService("http://navserver2.navtor.com/ENCSync.svc");
+
+
+
+
+
+
+
             IReadOnlyList<InternalDBFile> files = await svc.GetFilesAsync(); // returns InternalDBFile[]
             VM.Files.Clear();
             foreach (var f in files)
