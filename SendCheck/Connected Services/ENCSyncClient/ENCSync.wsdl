@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ENCSync" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NavServerBasicHttpSecure_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false" />
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/NavService" />
+      <xsd:import schemaLocation="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IENCSync_Request2_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request2" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request2Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request3_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request3" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request3_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request3Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request4_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request4" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request4_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request4Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request5_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request5" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request5_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request5Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request6_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request6" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request6_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request6Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request7_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request7" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request7_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request7Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request8_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request8" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request8_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request8Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request9_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request9" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request9_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request9Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request10_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request10" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request10_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request10Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request11_InputMessage">
+    <wsdl:part name="parameters" element="tns:Request11" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Request11_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Request11Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_CloseAndReport2_InputMessage">
+    <wsdl:part name="parameters" element="tns:CloseAndReport2" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_CloseAndReport2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CloseAndReport2Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetCurrTimeUtc_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrTimeUtc" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetCurrTimeUtc_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrTimeUtcResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetImoNoFromVesseldentifier_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetImoNoFromVesseldentifier" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetImoNoFromVesseldentifier_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetImoNoFromVesseldentifierResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_IsValidNavStick_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsValidNavStick" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_IsValidNavStick_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsValidNavStickResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_IsValidNavStick2_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsValidNavStick2" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_IsValidNavStick2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsValidNavStick2Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_ReportDirectoryContent_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReportDirectoryContent" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_ReportDirectoryContent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReportDirectoryContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Refill_InputMessage">
+    <wsdl:part name="parameters" element="tns:Refill" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_Refill_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RefillResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetFileId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFileId" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetFileId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFileIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_ReportExternalFileImport_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReportExternalFileImport" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_ReportExternalFileImport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReportExternalFileImportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetInternalDBFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetInternalDBFiles" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetInternalDBFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetInternalDBFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetDataUpdateMaxSize_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataUpdateMaxSize" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GetDataUpdateMaxSize_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataUpdateMaxSizeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GeneratePdf_InputMessage">
+    <wsdl:part name="parameters" element="tns:GeneratePdf" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GeneratePdf_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GeneratePdfResponse" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GeneratePdf2_InputMessage">
+    <wsdl:part name="parameters" element="tns:GeneratePdf2" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_GeneratePdf2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GeneratePdf2Response" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_TimeoutTestMethod_InputMessage">
+    <wsdl:part name="parameters" element="tns:TimeoutTestMethod" />
+  </wsdl:message>
+  <wsdl:message name="IENCSync_TimeoutTestMethod_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TimeoutTestMethodResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IENCSync">
+    <wsdl:operation name="Request2">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request2" message="tns:IENCSync_Request2_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request2Response" message="tns:IENCSync_Request2_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request3">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request3" message="tns:IENCSync_Request3_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request3Response" message="tns:IENCSync_Request3_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request4">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request4" message="tns:IENCSync_Request4_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request4Response" message="tns:IENCSync_Request4_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request5">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request5" message="tns:IENCSync_Request5_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request5Response" message="tns:IENCSync_Request5_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request6">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request6" message="tns:IENCSync_Request6_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request6Response" message="tns:IENCSync_Request6_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request7">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request7" message="tns:IENCSync_Request7_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request7Response" message="tns:IENCSync_Request7_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request8">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request8" message="tns:IENCSync_Request8_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request8Response" message="tns:IENCSync_Request8_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request9">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request9" message="tns:IENCSync_Request9_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request9Response" message="tns:IENCSync_Request9_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request10">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request10" message="tns:IENCSync_Request10_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request10Response" message="tns:IENCSync_Request10_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Request11">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Request11" message="tns:IENCSync_Request11_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/Request11Response" message="tns:IENCSync_Request11_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CloseAndReport2">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/CloseAndReport2" message="tns:IENCSync_CloseAndReport2_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/CloseAndReport2Response" message="tns:IENCSync_CloseAndReport2_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrTimeUtc">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/GetCurrTimeUtc" message="tns:IENCSync_GetCurrTimeUtc_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/GetCurrTimeUtcResponse" message="tns:IENCSync_GetCurrTimeUtc_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetImoNoFromVesseldentifier">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/GetImoNoFromVesseldentifier" message="tns:IENCSync_GetImoNoFromVesseldentifier_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/GetImoNoFromVesseldentifierResponse" message="tns:IENCSync_GetImoNoFromVesseldentifier_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValidNavStick">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/IsValidNavStick" message="tns:IENCSync_IsValidNavStick_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/IsValidNavStickResponse" message="tns:IENCSync_IsValidNavStick_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsValidNavStick2">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/IsValidNavStick2" message="tns:IENCSync_IsValidNavStick2_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/IsValidNavStick2Response" message="tns:IENCSync_IsValidNavStick2_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReportDirectoryContent">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/ReportDirectoryContent" message="tns:IENCSync_ReportDirectoryContent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/ReportDirectoryContentResponse" message="tns:IENCSync_ReportDirectoryContent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Refill">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/Refill" message="tns:IENCSync_Refill_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/RefillResponse" message="tns:IENCSync_Refill_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFileId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/GetFileId" message="tns:IENCSync_GetFileId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/GetFileIdResponse" message="tns:IENCSync_GetFileId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReportExternalFileImport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/ReportExternalFileImport" message="tns:IENCSync_ReportExternalFileImport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/ReportExternalFileImportResponse" message="tns:IENCSync_ReportExternalFileImport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetInternalDBFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/GetInternalDBFiles" message="tns:IENCSync_GetInternalDBFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/GetInternalDBFilesResponse" message="tns:IENCSync_GetInternalDBFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataUpdateMaxSize">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/GetDataUpdateMaxSize" message="tns:IENCSync_GetDataUpdateMaxSize_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/GetDataUpdateMaxSizeResponse" message="tns:IENCSync_GetDataUpdateMaxSize_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GeneratePdf">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/GeneratePdf" message="tns:IENCSync_GeneratePdf_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/GeneratePdfResponse" message="tns:IENCSync_GeneratePdf_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GeneratePdf2">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/GeneratePdf2" message="tns:IENCSync_GeneratePdf2_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/GeneratePdf2Response" message="tns:IENCSync_GeneratePdf2_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TimeoutTestMethod">
+      <wsdl:input wsaw:Action="http://tempuri.org/IENCSync/TimeoutTestMethod" message="tns:IENCSync_TimeoutTestMethod_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IENCSync/TimeoutTestMethodResponse" message="tns:IENCSync_TimeoutTestMethod_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NavServerBasicHttpSecure" type="tns:IENCSync">
+    <wsp:PolicyReference URI="#NavServerBasicHttpSecure_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Request2">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request3">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request3" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request4">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request4" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request5">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request5" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request6">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request6" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request7">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request7" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request8">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request8" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request9">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request9" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request10">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request10" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Request11">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Request11" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CloseAndReport2">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/CloseAndReport2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrTimeUtc">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/GetCurrTimeUtc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetImoNoFromVesseldentifier">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/GetImoNoFromVesseldentifier" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidNavStick">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/IsValidNavStick" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsValidNavStick2">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/IsValidNavStick2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportDirectoryContent">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/ReportDirectoryContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Refill">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/Refill" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFileId">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/GetFileId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReportExternalFileImport">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/ReportExternalFileImport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetInternalDBFiles">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/GetInternalDBFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataUpdateMaxSize">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/GetDataUpdateMaxSize" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GeneratePdf">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/GeneratePdf" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GeneratePdf2">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/GeneratePdf2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TimeoutTestMethod">
+      <soap:operation soapAction="http://tempuri.org/IENCSync/TimeoutTestMethod" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ENCSync">
+    <wsdl:port name="NavServerBasicHttpSecure" binding="tns:NavServerBasicHttpSecure">
+      <soap:address location="https://navserver2.navtor.com/ENCSync.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
