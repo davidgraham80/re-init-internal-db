@@ -28,12 +28,12 @@ namespace ReInitializeDatabase
         {
             InitializeComponent();
             DataContext = VM;
-            Loaded += async (_, __) => await LoadAsync();
+            //Loaded += async (_, __) => await LoadAsync();
         }
 
         async Task LoadAsync()
         {
-            var svc = new  InternalDbService("http://navserver2.navtor.com/ENCSync.svc");
+            var svc = new  InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
 
 
 
@@ -47,12 +47,23 @@ namespace ReInitializeDatabase
                 VM.Files.Add(new FileChoice { FileName = f.FileName, FileSize = f.FileSize, Source = f });
         }
 
-        void SelectAll_Click(object s, RoutedEventArgs e) => VM.Files.ToList().ForEach(x => x.IsChecked = true);
+        private void SelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            if (VM.Files.Count == 0)
+                return;
+
+            // Determine if we’re mostly checked or unchecked right now
+            bool shouldCheck = VM.Files.Any(f => !f.IsChecked);
+
+            foreach (var file in VM.Files)
+                file.IsChecked = shouldCheck;
+        }
+
 
         async void Ok_Click(object s, RoutedEventArgs e)
         {
             List<InternalDBFile> chosen = VM.Files.Where(x => x.IsChecked).Select(x => x.Source).ToList();
-            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc");
+            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
             await svc.SendAsync(chosen);
             MessageBox.Show("Done.");
         }
@@ -65,7 +76,7 @@ namespace ReInitializeDatabase
                 return;
             }
 
-            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc");
+            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
             var files = await svc.GetFilesAsync();
 
             VM.Files.Clear();

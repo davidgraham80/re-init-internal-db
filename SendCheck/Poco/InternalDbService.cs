@@ -13,7 +13,12 @@ namespace SendCheck.Poco
     public sealed class InternalDbService : IInternalDbService
     {
         private readonly string _url;
-        public InternalDbService(string url) => _url = url;
+        private readonly string _usbSerialNumber;
+        public InternalDbService(string url, string usbSerialNumber)
+        {
+            _url = url;
+            _usbSerialNumber = usbSerialNumber;
+        }
 
         public async Task<IReadOnlyList<WsFile>> GetFilesAsync(CancellationToken ct = default)
         {
@@ -30,8 +35,6 @@ namespace SendCheck.Poco
                 {
                     // inputs
                     string navSyncVersion = "4.14.1.1024"; // TODO: supply real value
-                    //string usbSerialNumber = "76AE97654B41"; //MS MARINSCHEK
-                    string usbSerialNumber = "12A456798A7D"; //MS DAVID
 
                     try
                     {
@@ -40,7 +43,7 @@ namespace SendCheck.Poco
 
                         ReinitializeDatabaseResult result = client.GetInternalDBFiles(
                             navSyncVersion,
-                            usbSerialNumber,
+                            _usbSerialNumber,
                             out files,
                             out producerCode);
 
