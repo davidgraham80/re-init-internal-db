@@ -19,6 +19,19 @@ namespace ReInitializeDatabase.ViewModels
             }
         }
 
+
+        string _serialNumber;
+        public string SerialNumber
+        {
+            get => _serialNumber;
+            set
+            {
+                if (_serialNumber == value) return;
+                _serialNumber = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SerialNumber)));
+            }
+        }
+
         public string FileName { get; set; } = string.Empty;
         public long FileSize { get; set; }
         //public object Source { get; set; }
@@ -30,5 +43,7 @@ namespace ReInitializeDatabase.ViewModels
     public sealed class FilesVM
     {
         public ObservableCollection<FileChoice> Files { get; } = new ObservableCollection<FileChoice>();
+        public string SerialNumber { get; set; }
+
     }
 }

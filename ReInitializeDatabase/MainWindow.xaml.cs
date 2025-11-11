@@ -56,5 +56,22 @@ namespace ReInitializeDatabase
             await svc.SendAsync(chosen);
             MessageBox.Show("Done.");
         }
+
+        private async void LoadFiles_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(VM.SerialNumber))
+            {
+                MessageBox.Show("Please enter a serial number first.");
+                return;
+            }
+
+            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc");
+            var files = await svc.GetFilesAsync();
+
+            VM.Files.Clear();
+            foreach (var f in files)
+                VM.Files.Add(new FileChoice { FileName = f.FileName, FileSize = f.FileSize, Source = f });
+        }
+
     }
 }
