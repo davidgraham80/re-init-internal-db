@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel Margin="12" Orientation="Horizontal" VerticalAlignment="Top">
+        <StackPanel Grid.Row="0" Margin="12" Orientation="Horizontal" VerticalAlignment="Top">
             <TextBlock Text="Serial Number:" VerticalAlignment="Center" FontWeight="Bold"/>
             <TextBox Width="200" Margin="8,0,0,0"
                      Text="{Binding SerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -16,8 +20,7 @@
                     Click="LoadFiles_Click"/>
         </StackPanel>
 
-
-        <ListView ItemsSource="{Binding Files}" Name="FilesList" Margin="12" SelectionMode="Extended">
+        <ListView Grid.Row="1" ItemsSource="{Binding Files}" Name="FilesList" Margin="12" SelectionMode="Extended">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="36">
@@ -42,6 +45,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
     </Grid>
+
 </Window>
