@@ -1,0 +1,29 @@
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.userprefs
+
+# Build output
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+TestResults/
+*.log
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.assets.json
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Rider / JetBrains
+.idea/
+*.iml
