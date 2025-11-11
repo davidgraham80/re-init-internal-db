@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/NavService" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/NavService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="RequestInfo2">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientVerificationCode" type="xs:int" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimatedCount" type="xs:int" />
+      <xs:element minOccurs="0" name="EstimatedSize" type="xs:int" />
+      <xs:element minOccurs="0" name="EstimatedTimeToWait" type="ser:duration" />
+      <xs:element minOccurs="0" name="RequestGUID" type="ser:guid" />
+      <xs:element minOccurs="0" name="URL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VesselName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestInfo2" nillable="true" type="tns:RequestInfo2" />
+  <xs:complexType name="RequestInfo3">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientVerificationCode" type="xs:int" />
+      <xs:element minOccurs="0" name="DataServer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimatedCount" type="xs:int" />
+      <xs:element minOccurs="0" name="EstimatedSize" type="xs:int" />
+      <xs:element minOccurs="0" name="EstimatedTimeToWait" type="ser:duration" />
+      <xs:element minOccurs="0" name="ReleaseDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReleaseWeek" type="xs:int" />
+      <xs:element minOccurs="0" name="ReleaseYear" type="xs:int" />
+      <xs:element minOccurs="0" name="RequestGUID" type="ser:guid" />
+      <xs:element minOccurs="0" name="URL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VesselName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestInfo3" nillable="true" type="tns:RequestInfo3" />
+  <xs:complexType name="RequestInfo4">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientVerificationCode" type="xs:int" />
+      <xs:element minOccurs="0" name="DataServer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimatedCount" type="xs:int" />
+      <xs:element minOccurs="0" name="EstimatedSize" type="xs:int" />
+      <xs:element minOccurs="0" name="EstimatedTimeToWait" type="ser:duration" />
+      <xs:element minOccurs="0" name="PreRegisterOem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReleaseDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReleaseWeek" type="xs:int" />
+      <xs:element minOccurs="0" name="ReleaseYear" type="xs:int" />
+      <xs:element minOccurs="0" name="RequestGUID" type="ser:guid" />
+      <xs:element minOccurs="0" name="URL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VesselName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestInfo4" nillable="true" type="tns:RequestInfo4" />
+  <xs:complexType name="RequestInfo5">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ClientVerificationCode" type="xs:int" />
+      <xs:element minOccurs="0" name="DataServer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimatedCount" type="xs:int" />
+      <xs:element minOccurs="0" name="EstimatedSize" type="xs:int" />
+      <xs:element minOccurs="0" name="EstimatedTimeToWait" type="ser:duration" />
+      <xs:element minOccurs="0" name="ExportS63" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ExportSENC" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PreRegisterOem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReleaseDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReleaseWeek" type="xs:int" />
+      <xs:element minOccurs="0" name="ReleaseYear" type="xs:int" />
+      <xs:element minOccurs="0" name="RequestGUID" type="ser:guid" />
+      <xs:element minOccurs="0" name="SizeOfCellsUpdated" type="xs:int" />
+      <xs:element minOccurs="0" name="URL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VesselName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestInfo5" nillable="true" type="tns:RequestInfo5" />
+  <xs:complexType name="RequestArguments">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BackupFolder" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BackupHost" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BytesToSave" type="xs:long" />
+      <xs:element minOccurs="0" name="DataServer" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Inventory" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="IsLazyOfflineRequestProcessing" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastBackedup" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LoggedInUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NavBoxId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NavBoxSwVersion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NavSyncVersion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OSVersionCaller" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OffLineRequest" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="OpAreaCrc" type="xs:int" />
+      <xs:element minOccurs="0" name="UserIdentifier" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestArguments" nillable="true" type="tns:RequestArguments" />
+  <xs:complexType name="ReportInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DatabaseVersion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NumberOfNewENCs" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfNewIssues" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfPicTxt" type="xs:int" />
+      <xs:element minOccurs="0" name="NumberOfUpdates" type="xs:int" />
+      <xs:element minOccurs="0" name="RequestGUID" type="ser:guid" />
+      <xs:element minOccurs="0" name="UpdateSize" type="xs:int" />
+      <xs:element minOccurs="0" name="UpdatedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserIdentifier" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VesselName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReportInfo" nillable="true" type="tns:ReportInfo" />
+  <xs:complexType name="FileDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Crc" type="xs:int" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileSize" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileDescription" nillable="true" type="tns:FileDescription" />
+  <xs:complexType name="ArrayOfFileDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FileDescription" nillable="true" type="tns:FileDescription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFileDescription" nillable="true" type="tns:ArrayOfFileDescription" />
+  <xs:simpleType name="GetFileIdResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Succeeded" />
+      <xs:enumeration value="NotFound" />
+      <xs:enumeration value="AlreadyHasNewVersion" />
+      <xs:enumeration value="NavStickIsNotRegistered" />
+      <xs:enumeration value="InternalError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="GetFileIdResult" nillable="true" type="tns:GetFileIdResult" />
+  <xs:complexType name="FileIdInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IsObsolete" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ModifiedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FileIdInfo" nillable="true" type="tns:FileIdInfo" />
+  <xs:simpleType name="ReinitializeDatabaseResult">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Succeded" />
+      <xs:enumeration value="NavStickNotRegistered" />
+      <xs:enumeration value="InternalError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ReinitializeDatabaseResult" nillable="true" type="tns:ReinitializeDatabaseResult" />
+  <xs:complexType name="ArrayOfInternalDBFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InternalDBFile" nillable="true" type="tns:InternalDBFile" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInternalDBFile" nillable="true" type="tns:ArrayOfInternalDBFile" />
+  <xs:complexType name="InternalDBFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Crc" type="xs:int" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileSize" type="xs:long" />
+      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternalDBFile" nillable="true" type="tns:InternalDBFile" />
+</xs:schema>

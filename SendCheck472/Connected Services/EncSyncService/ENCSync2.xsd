@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/NavService" />
+  <xs:import schemaLocation="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:element name="Request2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request2Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request2Result" nillable="true" type="q1:RequestInfo2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request3">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request3Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request3Result" nillable="true" type="q2:RequestInfo2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request4">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dataServer" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request4Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request4Result" nillable="true" type="q3:RequestInfo3" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request5">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dataServer" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request5Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request5Result" nillable="true" type="q4:RequestInfo4" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request6">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dataServer" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request6Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request6Result" nillable="true" type="q5:RequestInfo5" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request7">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dataServer" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="loggedInUser" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request7Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request7Result" nillable="true" type="q6:RequestInfo5" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request8">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dataServer" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="loggedInUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navtrackerOfflineData" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request8Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request8Result" nillable="true" type="q7:RequestInfo5" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request9">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dataServer" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="loggedInUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navtrackerOfflineData" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="bytesToCompress" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request9Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request9Result" nillable="true" type="q8:RequestInfo5" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request10">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dataServer" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="loggedInUser" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="offLineRequest" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="bytesToSave" type="xs:long" />
+        <xs:element minOccurs="0" name="lastBackedup" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="backupFolder" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="backupHost" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request10Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request10Result" nillable="true" type="q9:RequestInfo5" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request11">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="arguments" nillable="true" type="q10:RequestArguments" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Request11Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="Request11Result" nillable="true" type="q11:RequestInfo5" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseAndReport2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="reportInfo" nillable="true" type="q12:ReportInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseAndReport2Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CloseAndReport2Result" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCurrTimeUtc">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCurrTimeUtcResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetCurrTimeUtcResult" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetImoNoFromVesseldentifier">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetImoNoFromVesseldentifierResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetImoNoFromVesseldentifierResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsValidNavStick">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navstick_serial_number" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsValidNavStickResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsValidNavStickResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsValidNavStick2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navstick_serial_number" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="IsValidNavStick2Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IsValidNavStick2Result" type="xs:boolean" />
+        <xs:element minOccurs="0" name="bReInitializeAllowed" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportDirectoryContent">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="imoNo" type="xs:int" />
+        <xs:element minOccurs="0" name="clientSoftware" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="topDirectory" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="compressedDirectoryContent" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportDirectoryContentResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReportDirectoryContentResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Refill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="inventory" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="opAreaCrc" type="xs:int" />
+        <xs:element minOccurs="0" name="navBoxId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navBoxSwVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dataServer" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RefillResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="RefillResult" nillable="true" type="q13:RequestInfo5" />
+        <xs:element minOccurs="0" name="reduced" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="newFile" nillable="true" type="q14:FileDescription" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="existingFiles" nillable="true" type="q15:ArrayOfFileDescription" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFileIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="GetFileIdResult" type="q16:GetFileIdResult" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="fileIdInfo" nillable="true" type="q17:FileIdInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportExternalFileImport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="fileIds" nillable="true" type="q18:ArrayOfint" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportExternalFileImportResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternalDBFiles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="navSyncVersion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="navStickSerialNumber" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternalDBFilesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="GetInternalDBFilesResult" type="q19:ReinitializeDatabaseResult" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/NavService" minOccurs="0" name="files" nillable="true" type="q20:ArrayOfInternalDBFile" />
+        <xs:element minOccurs="0" name="producerCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataUpdateMaxSize">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userIdentifier" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataUpdateMaxSizeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDataUpdateMaxSizeResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeneratePdf">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="guid" type="q21:guid" />
+        <xs:element minOccurs="0" name="patchSize" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeneratePdfResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GeneratePdfResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeneratePdf2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="guid" type="q22:guid" />
+        <xs:element minOccurs="0" name="patchSize" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeneratePdf2Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GeneratePdf2Result" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TimeoutTestMethod">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="timeout" type="q23:duration" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TimeoutTestMethodResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TimeoutTestMethodResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

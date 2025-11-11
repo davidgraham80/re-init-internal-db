@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="df46fdf3-729e-4e7e-a486-255219a12615" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://navserver2.navtor.com/ENCSync.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ENCSync.wsdl" MetadataType="Wsdl" ID="eb120f9e-0fd3-4392-8fb4-a855b115f8b5" SourceId="1" SourceUrl="https://navserver2.navtor.com/ENCSync.svc?wsdl" />
+    <MetadataFile FileName="ENCSync.xsd" MetadataType="Schema" ID="85bdb055-4c00-43a3-8a54-fedc89775b33" SourceId="1" SourceUrl="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd3" />
+    <MetadataFile FileName="ENCSync1.xsd" MetadataType="Schema" ID="6fb564e2-c959-46cf-bf1a-b19045973c54" SourceId="1" SourceUrl="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd2" />
+    <MetadataFile FileName="ENCSync.disco" MetadataType="Disco" ID="f7916aba-62d4-4747-aff1-34391be57188" SourceId="1" SourceUrl="https://navserver2.navtor.com/ENCSync.svc?disco" />
+    <MetadataFile FileName="ENCSync2.xsd" MetadataType="Schema" ID="1b81aeee-c66b-431a-993c-467d127777e0" SourceId="1" SourceUrl="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd0" />
+    <MetadataFile FileName="ENCSync3.xsd" MetadataType="Schema" ID="8a1eda14-af12-42c1-8f76-d7ca07966ed0" SourceId="1" SourceUrl="https://navserver2.navtor.com/ENCSync.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
