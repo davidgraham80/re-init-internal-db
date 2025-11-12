@@ -55,7 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModels\FileChoice.cs" />
+    <Compile Include="ViewModels\FileChoiceVm.cs" />
+    <Compile Include="ViewModels\MainWindowVm.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

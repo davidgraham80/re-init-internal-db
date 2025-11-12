@@ -28,7 +28,8 @@ namespace ReInitializeDatabase
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = VM;
+            //DataContext = VM;
+            DataContext = new MainWindowVm();
             //Loaded += async (_, __) => await LoadAsync();
         }
 
@@ -45,7 +46,7 @@ namespace ReInitializeDatabase
             IReadOnlyList<InternalDBFile> files = await svc.GetFilesAsync(); // returns InternalDBFile[]
             VM.Files.Clear();
             foreach (var f in files)
-                VM.Files.Add(new FileChoice { FileName = f.FileName, FileSize = f.FileSize, Source = f });
+                VM.Files.Add(new FileChoiceVm { FileName = f.FileName, FileSize = f.FileSize, Source = f });
         }
 
         private void SelectAll_Click(object sender, RoutedEventArgs e)
@@ -94,7 +95,7 @@ namespace ReInitializeDatabase
 
                 VM.Files.Clear();
                 foreach (InternalDBFile f in files)
-                    VM.Files.Add(new FileChoice { FileName = f.FileName, FileSize = f.FileSize, Source = f });
+                    VM.Files.Add(new FileChoiceVm { FileName = f.FileName, FileSize = f.FileSize, Source = f });
             }
             catch (Exception ex)
             {

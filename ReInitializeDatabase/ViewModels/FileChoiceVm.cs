@@ -4,7 +4,7 @@ using WsFile = SendCheck.ENCSyncClient.InternalDBFile;
 
 namespace ReInitializeDatabase.ViewModels
 {
-    public sealed class FileChoice : INotifyPropertyChanged
+    public sealed class FileChoiceVm : INotifyPropertyChanged
     {
         private bool _isChecked;
 
@@ -32,6 +32,8 @@ namespace ReInitializeDatabase.ViewModels
             }
         }
 
+        public bool IsSerialNumberValid => !string.IsNullOrWhiteSpace(SerialNumber);
+
         public string FileName { get; set; } = string.Empty;
         public long FileSize { get; set; }
         //public object Source { get; set; }
@@ -42,7 +44,7 @@ namespace ReInitializeDatabase.ViewModels
 
     public sealed class FilesVM
     {
-        public ObservableCollection<FileChoice> Files { get; } = new ObservableCollection<FileChoice>();
+        public ObservableCollection<FileChoiceVm> Files { get; } = new ObservableCollection<FileChoiceVm>();
         public string SerialNumber { get; set; }
 
     }
