@@ -24,13 +24,12 @@ namespace ReInitializeDatabase
     /// </summary>
     public partial class MainWindow : Window
     {
-        public FilesVM VM { get; } = new FilesVM();
+        private MainWindowVm VM { get; }
         public MainWindow()
         {
             InitializeComponent();
-            //DataContext = VM;
-            DataContext = new MainWindowVm();
-            //Loaded += async (_, __) => await LoadAsync();
+            VM = new MainWindowVm();
+            DataContext = VM;
         }
 
         async Task LoadAsync()
@@ -80,11 +79,13 @@ namespace ReInitializeDatabase
 
             try
             {
+                VM.IsBusy = true;
+
                 var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
 
                 IReadOnlyList<InternalDBFile> files = await svc.GetFilesAsync();
 
-                if (files == null || files.Count == 0)
+                if(files == null || files.Count == 0)
                 {
                     MessageBox.Show("No files were returned.\n\n" +
                                     "This may happen if the serial number is invalid.",
@@ -94,12 +95,16 @@ namespace ReInitializeDatabase
                 }
 
                 VM.Files.Clear();
-                foreach (InternalDBFile f in files)
+                foreach(InternalDBFile f in files)
                     VM.Files.Add(new FileChoiceVm { FileName = f.FileName, FileSize = f.FileSize, Source = f });
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show($"Failed to load files:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                VM.IsBusy = false;
             }
         }
 

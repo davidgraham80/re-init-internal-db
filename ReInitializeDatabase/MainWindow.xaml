@@ -22,14 +22,14 @@
 
             <Button Content="Load Files" Width="100" Margin="8,0,0,0"
                     Click="LoadFiles_Click"
-                    IsEnabled="{Binding IsSerialNumberValid}" />
+                    IsEnabled="{Binding IsLoadEnabled}" />
 
             <Button Content="Check / Uncheck All" Width="150" Margin="8,0,0,0"
                     Click="SelectAll_Click"/>
             
             <Button Content="Send" Width="100" Margin="8,0,0,0"
                     Click="Send_Click"
-                    IsEnabled="{Binding IsSerialNumberValid}"/>
+                    IsEnabled="{Binding IsLoadEnabled}"/>
         </StackPanel>
 
 

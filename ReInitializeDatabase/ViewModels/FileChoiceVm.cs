@@ -20,19 +20,6 @@ namespace ReInitializeDatabase.ViewModels
         }
 
 
-        string _serialNumber;
-        public string SerialNumber
-        {
-            get => _serialNumber;
-            set
-            {
-                if (_serialNumber == value) return;
-                _serialNumber = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SerialNumber)));
-            }
-        }
-
-        public bool IsSerialNumberValid => !string.IsNullOrWhiteSpace(SerialNumber);
 
         public string FileName { get; set; } = string.Empty;
         public long FileSize { get; set; }
