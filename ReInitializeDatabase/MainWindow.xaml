@@ -25,7 +25,8 @@
                     IsEnabled="{Binding IsLoadEnabled}" />
 
             <Button Content="Check / Uncheck All" Width="150" Margin="8,0,0,0"
-                    Click="SelectAll_Click"/>
+                    Click="SelectAll_Click"
+                    IsEnabled="{Binding HasFiles}"/>
             
             <Button Content="Send" Width="100" Margin="8,0,0,0"
                     Click="Send_Click"
