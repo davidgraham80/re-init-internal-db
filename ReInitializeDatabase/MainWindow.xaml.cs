@@ -91,6 +91,8 @@ namespace ReInitializeDatabase
                                     "This may happen if the serial number is invalid.",
                                     "No Files Found",
                                     MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    VM.Files.Clear();
                     return;
                 }
 
