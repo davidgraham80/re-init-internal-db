@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SendCheck.ENCSyncClient;
 using SendCheck.Poco;
+using NavBox.Files;
 
 namespace ReInitializeDatabase
 {
@@ -76,12 +77,29 @@ namespace ReInitializeDatabase
                 return;
             }
 
-            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
-            var files = await svc.GetFilesAsync();
+            try
+            {
+                var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
 
-            VM.Files.Clear();
-            foreach (var f in files)
-                VM.Files.Add(new FileChoice { FileName = f.FileName, FileSize = f.FileSize, Source = f });
+                IReadOnlyList<InternalDBFile> files = await svc.GetFilesAsync();
+
+                if (files == null || files.Count == 0)
+                {
+                    MessageBox.Show("No files were returned.\n\n" +
+                                    "This may happen if the serial number is invalid.",
+                                    "No Files Found",
+                                    MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                VM.Files.Clear();
+                foreach (InternalDBFile f in files)
+                    VM.Files.Add(new FileChoice { FileName = f.FileName, FileSize = f.FileSize, Source = f });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load files:\n{ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void Send_Click(object sender, RoutedEventArgs e)

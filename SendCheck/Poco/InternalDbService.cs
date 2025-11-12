@@ -1,7 +1,9 @@
 ﻿using SendCheck.ENCSyncClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.ServiceModel;
 using System.Text;
 using System.Threading;
@@ -47,18 +49,19 @@ namespace SendCheck.Poco
                             out files,
                             out producerCode);
 
-                        if (result != ReinitializeDatabaseResult.Succeded || files == null)
-                            throw new InvalidOperationException($"GetInternalDBFiles failed: {result}");
+                        if (result != ReinitializeDatabaseResult.Succeded || files == null || files.Length == 0)
+                            return (IReadOnlyList<WsFile>)Array.Empty<WsFile>();
+                            //throw new InvalidOperationException($"GetInternalDBFiles failed: {result}");
 
                         return (IReadOnlyList<WsFile>)files?.ToList() ?? new List<WsFile>();
                     }
                     catch (FaultException fe)
                     {
-                        throw;
+                        return new List<WsFile>();
                     }
                     catch (CommunicationException ce)
                     {
-                        throw;
+                        return new List<WsFile>();
                     }
 
                 }, ct);
@@ -69,6 +72,30 @@ namespace SendCheck.Poco
         {
             throw new NotImplementedException();
         }
+
+        //original code
+        //private void test()
+        //{
+        //    if (String.IsNullOrEmpty(_usbSerialNumber))
+        //        throw new Exception("Missing navbox_serial_number");
+        //    if (String.IsNullOrEmpty(originator))
+        //        throw new Exception("Missing originator");
+        //    byte[] message = m.ToByteArray();
+        //    WebRequest request2 = WebRequest.Create("https://navserver2.navtor.com/NavTorMessagesR.svc/SendMessageToNavBox/" + navbox_serial_number + ";" + originator + ";" + email);
+        //    request2.Method = "POST";
+        //    request2.ContentLength = message.Length;
+        //    Stream serverStream = request2.GetRequestStream();
+        //    serverStream.Write(message, 0, message.Length);
+        //    serverStream.Close();
+        //    using (HttpWebResponse response = request2.GetResponse() as HttpWebResponse)
+        //    {
+        //        int statusCode = (int)response.StatusCode;
+        //        StreamReader reader = new StreamReader(response.GetResponseStream());
+        //        string xml = reader.ReadToEnd();
+        //        int retcode = DeserializeFromString<int>(RemoveAllXmlNamespace(xml));
+        //        return retcode == 1;
+        //    }
+        //}
     }
 
 }
