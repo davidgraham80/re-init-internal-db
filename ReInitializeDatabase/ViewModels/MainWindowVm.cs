@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 
 namespace ReInitializeDatabase.ViewModels
 {
@@ -13,7 +14,27 @@ namespace ReInitializeDatabase.ViewModels
 
         private void Files_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            // Subscribe to IsChecked changes on new items
+            if (e.NewItems != null)
+            {
+                foreach (FileChoiceVm item in e.NewItems)
+                    item.PropertyChanged += FilePropertyChanged;
+            }
+
+            // Unsubscribe when items are removed
+            if (e.OldItems != null)
+            {
+                foreach (FileChoiceVm item in e.OldItems)
+                    item.PropertyChanged -= FilePropertyChanged;
+            }
+
             this.OnPropertyChanged(nameof(this.HasFiles));
+        }
+
+        private void FilePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(FileChoiceVm.IsChecked))
+                this.OnPropertyChanged(nameof(this.CanSend));
         }
 
         private bool _isBusy;
@@ -48,6 +69,8 @@ namespace ReInitializeDatabase.ViewModels
         public bool IsSerialNumberValid => !string.IsNullOrWhiteSpace(SerialNumber);
 
         public bool HasFiles => Files.Count > 0;
+
+        public bool CanSend => Files.Any(f => f.IsChecked);
 
 
         public ObservableCollection<FileChoiceVm> Files { get; } = new ObservableCollection<FileChoiceVm>();
