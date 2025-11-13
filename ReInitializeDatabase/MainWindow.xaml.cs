@@ -1,21 +1,16 @@
 ﻿using ReInitializeDatabase.ViewModels;
+using SendCheck.ENCSyncClient;
+using SendCheck.Poco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using SendCheck.ENCSyncClient;
-using SendCheck.Poco;
-using NavBox.Files;
+using System.Windows.Media.Animation;
+using Navtor.Message;
+using Newtonsoft.Json;
+using ReInitializeDatabase.Utilities;
 
 namespace ReInitializeDatabase
 {
@@ -24,54 +19,51 @@ namespace ReInitializeDatabase
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainWindowVm VM { get; }
+        MessageSendingHelper _messageHelper = new MessageSendingHelper();
+
+        private MainWindowVm _vm { get; }
         public MainWindow()
         {
             InitializeComponent();
-            VM = new MainWindowVm();
-            DataContext = VM;
+            _vm = new MainWindowVm();
+            DataContext = _vm;
         }
 
         async Task LoadAsync()
         {
-            var svc = new  InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
-
-
-
-
-
-
+            var svc = new  InternalDbService("http://navserver2.navtor.com/ENCSync.svc", _vm.SerialNumber);
 
             IReadOnlyList<InternalDBFile> files = await svc.GetFilesAsync(); // returns InternalDBFile[]
-            VM.Files.Clear();
+            _vm.Files.Clear();
             foreach (var f in files)
-                VM.Files.Add(new FileChoiceVm { FileName = f.FileName, FileSize = f.FileSize, Source = f });
+                _vm.Files.Add(new FileChoiceVm { FileName = f.FileName, FileSize = f.FileSize, Source = f });
         }
 
         private void SelectAll_Click(object sender, RoutedEventArgs e)
         {
-            if (VM.Files.Count == 0)
+            if (_vm.Files.Count == 0)
                 return;
 
             // Determine if we’re mostly checked or unchecked right now
-            bool shouldCheck = VM.Files.Any(f => !f.IsChecked);
+            bool shouldCheck = _vm.Files.Any(f => !f.IsChecked);
 
-            foreach (var file in VM.Files)
+            foreach (var file in _vm.Files)
                 file.IsChecked = shouldCheck;
         }
 
 
         async void Ok_Click(object s, RoutedEventArgs e)
         {
-            List<InternalDBFile> chosen = VM.Files.Where(x => x.IsChecked).Select(x => x.Source).ToList();
-            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
+            List<InternalDBFile> chosen = _vm.Files.Where(x => x.IsChecked).Select(x => x.Source).ToList();
+            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", _vm.SerialNumber);
             await svc.SendAsync(chosen);
             MessageBox.Show("Done.");
         }
+        IReadOnlyList<InternalDBFile> _filesDetailsFromServer;
 
         private async void LoadFiles_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(VM.SerialNumber))
+            if (string.IsNullOrWhiteSpace(_vm.SerialNumber))
             {
                 MessageBox.Show("Please enter a serial number first.");
                 return;
@@ -79,26 +71,26 @@ namespace ReInitializeDatabase
 
             try
             {
-                VM.IsBusy = true;
+                _vm.IsBusy = true;
 
-                var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", VM.SerialNumber);
+                var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", _vm.SerialNumber);
 
-                IReadOnlyList<InternalDBFile> files = await svc.GetFilesAsync();
+                _filesDetailsFromServer = await svc.GetFilesAsync();
 
-                if(files == null || files.Count == 0)
+                if(_filesDetailsFromServer == null || _filesDetailsFromServer.Count == 0)
                 {
                     MessageBox.Show("No files were returned.\n\n" +
                                     "This may happen if the serial number is invalid.",
                                     "No Files Found",
                                     MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    VM.Files.Clear();
+                    _vm.Files.Clear();
                     return;
                 }
 
-                VM.Files.Clear();
-                foreach(InternalDBFile f in files)
-                    VM.Files.Add(new FileChoiceVm { FileName = f.FileName, FileSize = f.FileSize, Source = f });
+                _vm.Files.Clear();
+                foreach(InternalDBFile f in _filesDetailsFromServer)
+                    _vm.Files.Add(new FileChoiceVm { FileName = f.FileName, FileSize = f.FileSize, Source = f });
             }
             catch(Exception ex)
             {
@@ -106,21 +98,21 @@ namespace ReInitializeDatabase
             }
             finally
             {
-                VM.IsBusy = false;
+                _vm.IsBusy = false;
             }
         }
 
         private async void Send_Click(object sender, RoutedEventArgs e)
         {
             // Collect checked files
-            var selectedFiles = VM.Files.Where(f => f.IsChecked).ToList();
+            List<FileChoiceVm> selectedFiles = _vm.Files.Where(f => f.IsChecked).ToList();
             if (!selectedFiles.Any())
             {
                 MessageBox.Show("Please select at least one file to send.");
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(VM.SerialNumber))
+            if (string.IsNullOrWhiteSpace(_vm.SerialNumber))
             {
                 MessageBox.Show("Please enter a serial number first.");
                 return;
@@ -128,17 +120,14 @@ namespace ReInitializeDatabase
 
             try
             {
-                string navSyncVersion = "4.14.1.1024";
-
-                var svc = new InternalDbService(
-                    "http://navserver2.navtor.com/ENCSync.svc",
-                    VM.SerialNumber);
-
                 List<InternalDBFile> internalFiles = selectedFiles
                                                      .Select(f => (InternalDBFile)f.Source)
                                                      .ToList();
 
-                await svc.SendAsync(internalFiles);
+                string dgMacAddress = "";
+
+                await _messageHelper.SendViaWcf(dgMacAddress, internalFiles, _filesDetailsFromServer);
+
 
                 MessageBox.Show($"{internalFiles.Count} file(s) sent successfully.");
             }
