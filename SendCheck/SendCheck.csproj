@@ -60,6 +60,7 @@
     <Compile Include="NavBoxCommand.cs" />
     <Compile Include="NavBoxSendFile.cs" />
     <Compile Include="NavtorMessage.cs" />
+    <Compile Include="Poco\CommandParameterData.cs" />
     <Compile Include="Poco\EncSyncClientFactory.cs" />
     <Compile Include="Poco\IInternalDbService.cs" />
     <Compile Include="Poco\InternalDbService.cs" />
