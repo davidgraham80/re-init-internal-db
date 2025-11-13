@@ -47,14 +47,14 @@
                     IsEnabled="{Binding IsLoadEnabled}"/>
 
             <TextBlock Grid.Row="1" Grid.Column="3"
-                       Text="Serial Number 2:"
+                       Text="MAC Address:"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Right"
                        Margin="0,4,8,0"
                        FontWeight="Bold"/>
 
             <TextBox Grid.Row="1" Grid.Column="4" Margin="0,4,8,0"
-                     Text="{Binding SerialNumber2,
+                     Text="{Binding MacAddress,
                         Mode=TwoWay,
                         UpdateSourceTrigger=PropertyChanged}"/>
 

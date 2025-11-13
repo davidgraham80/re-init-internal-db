@@ -118,15 +118,19 @@ namespace ReInitializeDatabase
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(_vm.MacAddress))
+            {
+                MessageBox.Show("Please enter a MAC-address first.");
+                return;
+            }
+
             try
             {
                 List<InternalDBFile> internalFiles = selectedFiles
                                                      .Select(f => (InternalDBFile)f.Source)
                                                      .ToList();
 
-                string dgMacAddress = "";
-
-                await _messageHelper.SendViaWcf(dgMacAddress, internalFiles, _filesDetailsFromServer);
+                await _messageHelper.SendViaWcf(_vm.MacAddress, internalFiles, _filesDetailsFromServer);
 
 
                 MessageBox.Show($"{internalFiles.Count} file(s) sent successfully.");

@@ -66,6 +66,18 @@ namespace ReInitializeDatabase.ViewModels
             }
         }
 
+        private string _macAddress;
+        public string MacAddress
+        {
+            get => _macAddress;
+            set
+            {
+                if (_macAddress == value) return;
+                _macAddress = value;
+                OnPropertyChanged(nameof(MacAddress));
+            }
+        }
+
         public bool IsSerialNumberValid => !string.IsNullOrWhiteSpace(SerialNumber);
 
         public bool HasFiles => Files.Count > 0;

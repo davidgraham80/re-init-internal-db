@@ -76,14 +76,14 @@ namespace SendCheck.Poco
             throw new NotImplementedException();
         }
 
-        public async Task<bool> SendAsync(NavtorMessage m, string navbox_serial_number, string originator, string email, CancellationToken ct = default)
+        public async Task<bool> SendAsync(NavtorMessage m, string macAddress, string originator, string email, CancellationToken ct = default)
         {
-            if (String.IsNullOrEmpty(navbox_serial_number))
-                throw new Exception("Missing navbox_serial_number");
+            if (String.IsNullOrEmpty(macAddress))
+                throw new Exception("Missing macAddress");
             if (String.IsNullOrEmpty(originator))
                 throw new Exception("Missing originator");
             byte[] message = m.ToByteArray();
-            WebRequest request2 = WebRequest.Create("https://navserver2.navtor.com/NavTorMessagesR.svc/SendMessageToNavBox/" + navbox_serial_number + ";" + originator + ";" + email);
+            WebRequest request2 = WebRequest.Create("https://navserver2.navtor.com/NavTorMessagesR.svc/SendMessageToNavBox/" + macAddress + ";" + originator + ";" + email);
             request2.Method = "POST";
             request2.ContentLength = message.Length;
             Stream serverStream = request2.GetRequestStream();
