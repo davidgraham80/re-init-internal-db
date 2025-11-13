@@ -6,41 +6,76 @@
         xmlns:vm="clr-namespace:ReInitializeDatabase.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Window.DataContext>
         <vm:MainWindowVm/>
     </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="12" Orientation="Horizontal" VerticalAlignment="Top">
-            <TextBlock Text="Serial Number:" VerticalAlignment="Center" FontWeight="Bold"/>
-            <TextBox Width="200" Margin="8,0,0,0"
-                     Text="{Binding SerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid Grid.Row="0" Margin="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <Button Content="Load Files" Width="100" Margin="8,0,0,0"
+            <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="Serial Number:"
+                       VerticalAlignment="Center"
+                       FontWeight="Bold"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="8,0,0,0"
+                     Text="{Binding SerialNumber,
+                                    Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Grid.Row="0" Grid.Column="2" Margin="8,0,0,0"
+                    Content="Load Files"
                     Click="LoadFiles_Click"
-                    IsEnabled="{Binding IsLoadEnabled}" />
+                    IsEnabled="{Binding IsLoadEnabled}"/>
 
-            <Button Content="Check / Uncheck All" Width="150" Margin="8,0,0,0"
-                    Click="SelectAll_Click"
-                    IsEnabled="{Binding HasFiles}"/>
-            
-            <Button Content="Send" Width="100" Margin="8,0,0,0"
+            <TextBlock Grid.Row="1" Grid.Column="3"
+                       Text="Serial Number 2:"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       Margin="0,4,8,0"
+                       FontWeight="Bold"/>
+
+            <TextBox Grid.Row="1" Grid.Column="4" Margin="0,4,8,0"
+                     Text="{Binding SerialNumber2,
+                        Mode=TwoWay,
+                        UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Grid.Row="1" Grid.Column="5" Margin="0,4,0,0"
+                    Content="Send"
                     Click="Send_Click"
                     IsEnabled="{Binding CanSend}"/>
-        </StackPanel>
+        </Grid>
 
-
-        <ListView Grid.Row="1" ItemsSource="{Binding Files}" Name="FilesList" Margin="12" SelectionMode="Extended">
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding Files}"
+                  Name="FilesList"
+                  Margin="12"
+                  SelectionMode="Extended">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="36">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                          HorizontalAlignment="Center"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -60,5 +95,4 @@
             </ListView.View>
         </ListView>
     </Grid>
-
 </Window>
