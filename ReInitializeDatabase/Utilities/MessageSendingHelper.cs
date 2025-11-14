@@ -40,7 +40,8 @@ namespace ReInitializeDatabase.Utilities
             }
         }
 
-        internal async Task<bool> SendViaWcf(string macAddress, List<InternalDBFile> internalFiles, IReadOnlyList<InternalDBFile> filesDetailsFromServer)
+        internal async Task<bool> SendViaWcf(string macAddress, List<InternalDBFile> internalFiles, IReadOnlyList<InternalDBFile> filesDetailsFromServer,
+                                             Action<int, int> progressCallback = null)
         {
             try
             {
@@ -52,9 +53,15 @@ namespace ReInitializeDatabase.Utilities
                     "http://navserver2.navtor.com/ENCSync.svc",
                     macAddress);
 
+                int total = messageList.Count;
+                int sent = 0;
+
                 foreach (NavtorMessage message in messageList)
                 {
-                    await svc.SendAsync(message, macAddress, "david.graham@navtor.com", "", new CancellationToken());
+                    sent++;
+                    await Task.Delay(500);
+                    //await svc.SendAsync(message, macAddress, "david.graham@navtor.com", "", new CancellationToken());
+                    progressCallback?.Invoke(sent, total);
                 }
             }
             catch (Exception ex)

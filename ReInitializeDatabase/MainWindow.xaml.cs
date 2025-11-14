@@ -139,7 +139,13 @@ namespace ReInitializeDatabase
                                                      .Select(f => (InternalDBFile)f.Source)
                                                      .ToList();
 
-                bool success = await _messageHelper.SendViaWcf(_vm.MacAddress, internalFiles, _filesDetailsFromServer);
+                
+
+                bool success = await _messageHelper.SendViaWcf(_vm.MacAddress, internalFiles, _filesDetailsFromServer,
+                                                               (current, total) =>
+                                                               {
+                                                                   _vm.StatusMessage = $"Sending message {current} of {total}…";
+                                                               });
 
                 if(success)
                 {
