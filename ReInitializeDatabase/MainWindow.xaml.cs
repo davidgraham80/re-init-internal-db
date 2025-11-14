@@ -130,10 +130,10 @@ namespace ReInitializeDatabase
                                                      .Select(f => (InternalDBFile)f.Source)
                                                      .ToList();
 
-                await _messageHelper.SendViaWcf(_vm.MacAddress, internalFiles, _filesDetailsFromServer);
+                bool success = await _messageHelper.SendViaWcf(_vm.MacAddress, internalFiles, _filesDetailsFromServer);
 
-
-                MessageBox.Show($"{internalFiles.Count} file(s) sent successfully.");
+                if (success)
+                    MessageBox.Show($"{internalFiles.Count} file(s) sent successfully.");
             }
             catch (Exception ex)
             {

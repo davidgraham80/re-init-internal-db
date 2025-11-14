@@ -99,9 +99,8 @@ namespace ReInitializeDatabase.Utilities
                 m = new NavtorMessage(c);
 
                 messageList.Add(m);
-
-                VerifyMessages();
             }
+            VerifyMessages();
         }
     }
 }
