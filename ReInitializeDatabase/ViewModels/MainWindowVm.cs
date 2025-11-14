@@ -78,6 +78,18 @@ namespace ReInitializeDatabase.ViewModels
             }
         }
 
+        private string _statusMessage;
+        public string StatusMessage
+        {
+            get => _statusMessage;
+            set
+            {
+                if (_statusMessage == value) return;
+                _statusMessage = value;
+                OnPropertyChanged(nameof(StatusMessage));
+            }
+        }
+
         public bool IsSerialNumberValid => !string.IsNullOrWhiteSpace(SerialNumber);
 
         public bool HasFiles => Files.Count > 0;

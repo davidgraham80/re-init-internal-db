@@ -1,16 +1,12 @@
-﻿using ReInitializeDatabase.ViewModels;
+﻿using ReInitializeDatabase.Utilities;
+using ReInitializeDatabase.ViewModels;
 using SendCheck.ENCSyncClient;
 using SendCheck.Poco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Animation;
-using Navtor.Message;
-using Newtonsoft.Json;
-using ReInitializeDatabase.Utilities;
 
 namespace ReInitializeDatabase
 {
@@ -19,7 +15,8 @@ namespace ReInitializeDatabase
     /// </summary>
     public partial class MainWindow : Window
     {
-        MessageSendingHelper _messageHelper = new MessageSendingHelper();
+        private MessageSendingHelper _messageHelper = new MessageSendingHelper();
+        private IReadOnlyList<InternalDBFile> _filesDetailsFromServer;
 
         private MainWindowVm _vm { get; }
         public MainWindow()
@@ -59,13 +56,17 @@ namespace ReInitializeDatabase
             await svc.SendAsync(chosen);
             MessageBox.Show("Done.");
         }
-        IReadOnlyList<InternalDBFile> _filesDetailsFromServer;
 
         private async void LoadFiles_Click(object sender, RoutedEventArgs e)
         {
+            string statusMsg = string.Empty;
+            _vm.StatusMessage = statusMsg;
+
             if (string.IsNullOrWhiteSpace(_vm.SerialNumber))
             {
-                MessageBox.Show("Please enter a serial number first.");
+                statusMsg = "Please enter a serial number first.";
+                _vm.StatusMessage = statusMsg;
+                MessageBox.Show(statusMsg);
                 return;
             }
 
@@ -104,23 +105,31 @@ namespace ReInitializeDatabase
 
         private async void Send_Click(object sender, RoutedEventArgs e)
         {
+            _vm.StatusMessage = string.Empty;
+            string statusMsg = string.Empty;
+
             // Collect checked files
             List<FileChoiceVm> selectedFiles = _vm.Files.Where(f => f.IsChecked).ToList();
             if (!selectedFiles.Any())
             {
+                _vm.StatusMessage = "Nothing to send – no files selected.";
                 MessageBox.Show("Please select at least one file to send.");
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(_vm.SerialNumber))
             {
-                MessageBox.Show("Please enter a serial number first.");
+                statusMsg = "Please enter a serial number first.";
+                _vm.StatusMessage = statusMsg;
+                MessageBox.Show(statusMsg);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(_vm.MacAddress))
             {
-                MessageBox.Show("Please enter a MAC-address first.");
+                statusMsg = "Please enter a MAC-address first.";
+                _vm.StatusMessage = "Please enter a MAC-address first.";
+                MessageBox.Show(statusMsg);
                 return;
             }
 
@@ -132,8 +141,12 @@ namespace ReInitializeDatabase
 
                 bool success = await _messageHelper.SendViaWcf(_vm.MacAddress, internalFiles, _filesDetailsFromServer);
 
-                if (success)
-                    MessageBox.Show($"{internalFiles.Count} file(s) sent successfully.");
+                if(success)
+                {
+                    statusMsg = $"{internalFiles.Count} file(s) sent successfully.";
+                    _vm.StatusMessage = statusMsg;
+                    MessageBox.Show(statusMsg);
+                }
             }
             catch (Exception ex)
             {
