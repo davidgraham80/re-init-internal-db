@@ -103,6 +103,18 @@ namespace ReInitializeDatabase
             }
         }
 
+        private async void CancelReinit_Click(object sender, RoutedEventArgs e)
+        {
+            bool success = await _messageHelper.CancelReinitViaWcf(_vm.MacAddress, 
+                                                           (current, total) =>
+                                                           {
+                                                               string msg = "Cancel Re-Initialize database message created successfully…";
+                                                               _vm.StatusMessage = msg;
+                                                               MessageBox.Show(msg);
+                                                           });
+        }
+
+
         private async void Send_Click(object sender, RoutedEventArgs e)
         {
             _vm.StatusMessage = string.Empty;
@@ -152,6 +164,11 @@ namespace ReInitializeDatabase
                     statusMsg = $"{internalFiles.Count} file(s) sent successfully.";
                     _vm.StatusMessage = statusMsg;
                     MessageBox.Show(statusMsg);
+                }
+                else
+                {
+                    statusMsg = string.Empty;
+                    _vm.StatusMessage = statusMsg;
                 }
             }
             catch (Exception ex)

@@ -20,7 +20,7 @@ namespace ReInitializeDatabase.Utilities
         private List<NavtorMessage> messageList = new List<NavtorMessage>();
         private int totalFiles;
         IReadOnlyList<InternalDBFile> _filesDetailsFromServer;
-
+        private readonly string navSyncVersion = "4.14.1.1024";
 
         private void VerifyMessages()
         {
@@ -47,8 +47,6 @@ namespace ReInitializeDatabase.Utilities
             {
                 CreateNavtorMessageList(internalFiles, true, filesDetailsFromServer);
 
-                string navSyncVersion = "4.14.1.1024";
-
                 var svc = new InternalDbService(
                     "http://navserver2.navtor.com/ENCSync.svc",
                     macAddress);
@@ -60,13 +58,49 @@ namespace ReInitializeDatabase.Utilities
                 {
                     sent++;
                     await Task.Delay(500);
-                    //await svc.SendAsync(message, macAddress, "david.graham@navtor.com", "", new CancellationToken());
+                    bool sendSuccess = await svc.SendAsync(message, macAddress, "david.graham@navtor.com", "", new CancellationToken());
+
+                    if(!sendSuccess)
+                        throw new Exception("Could not send files, please ensure you have the correct MAC address");
+
                     progressCallback?.Invoke(sent, total);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Send failed:\n{ex.Message}");
+                return false;
+            }
+            return true;
+        }
+
+        internal async Task<bool> CancelReinitViaWcf(string macAddress, Action<int, int> progressCallback = null)
+        {
+            try
+            {
+                NavBoxCommand command = null;
+                NavtorMessage message = null;
+                var cmdParameter = JsonConvert.SerializeObject(new
+                {
+                    cancel = true
+                });
+                command = new NavBoxCommand("CancelReInitDb", cmdParameter);
+                message = new NavtorMessage(command);
+
+                var svc = new InternalDbService(
+                    "http://navserver2.navtor.com/ENCSync.svc",
+                    macAddress);
+
+                bool cancelSuccess = await svc.SendAsync(message, macAddress, "david.graham@navtor.com", "", new CancellationToken());
+
+                if (!cancelSuccess)
+                    throw new Exception("Could not send files, please ensure you have the correct MAC address");
+                
+                progressCallback?.Invoke(1, 1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"CancelReinitViaWcf: Send failed:\n{ex.Message}");
                 return false;
             }
             return true;

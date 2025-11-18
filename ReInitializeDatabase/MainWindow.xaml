@@ -16,7 +16,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-
             <!-- status bar -->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -25,70 +24,77 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0"
-               Text="Serial Number:" VerticalAlignment="Center"
-               FontWeight="Bold" Margin="0,0,4,0"/>
+                   Text="Serial Number:" VerticalAlignment="Center"
+                   FontWeight="Bold" Margin="0,0,4,0"/>
 
         <TextBox Grid.Row="0" Grid.Column="1" Margin="0,0,4,0"
-             Text="{Binding SerialNumber,
-                            Mode=TwoWay,
-                            UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding SerialNumber,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
         <Button Grid.Row="0" Grid.Column="2" Margin="0,0,4,0"
-            Content="Load Files"
-            Click="LoadFiles_Click"
-            IsEnabled="{Binding IsLoadEnabled}"/>
+                Content="Load Files"
+                Click="LoadFiles_Click"
+                IsEnabled="{Binding IsLoadEnabled}"/>
 
         <TextBlock Grid.Row="0" Grid.Column="3"
-               Text="MAC Address:" VerticalAlignment="Center"
-               HorizontalAlignment="Right" Margin="0,0,4,0"
-               FontWeight="Bold"/>
+                   Text="MAC Address:" VerticalAlignment="Center"
+                   HorizontalAlignment="Right" Margin="0,0,4,0"
+                   FontWeight="Bold"/>
 
         <TextBox Grid.Row="0" Grid.Column="4" Margin="0,0,4,0"
-             Text="{Binding MacAddress,
-                            Mode=TwoWay,
-                            UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding MacAddress,
+                                Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"/>
 
         <Button Grid.Row="0" Grid.Column="5"
-            Content="Send"
-            Click="Send_Click"
-            IsEnabled="{Binding CanSend}"/>
+                Content="Send"
+                Click="Send_Click"
+                IsEnabled="{Binding CanSend}"/>
 
         <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
-            Margin="0,4,0,4" Width="150"
-            Content="Check / Uncheck All"
-            Click="SelectAll_Click"
-            IsEnabled="{Binding HasFiles}"/>
+                Margin="0,4,0,4" Width="150"
+                Content="Check / Uncheck All"
+                Click="SelectAll_Click"
+                IsEnabled="{Binding HasFiles}"/>
+
+        <Button Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3"
+                Margin="0,4,0,4" Width="120"
+                HorizontalAlignment="Right"
+                Content="Cancel Re-init"
+                Click="CancelReinit_Click"
+                IsEnabled="{Binding IsLoadEnabled}"/>
 
         <ListView Grid.Row="2" Grid.ColumnSpan="6"
-              ItemsSource="{Binding Files}"
-              Name="FilesList"
-              Margin="0,4,0,0"
-              SelectionMode="Extended">
+                  ItemsSource="{Binding Files}"
+                  Name="FilesList"
+                  Margin="0,4,0,0"
+                  SelectionMode="Extended">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="36">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}"
-                                      HorizontalAlignment="Center"/>
+                                          HorizontalAlignment="Center"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
                     <GridViewColumn Header="File name" Width="380"
-                                DisplayMemberBinding="{Binding FileName}" />
+                                    DisplayMemberBinding="{Binding FileName}" />
 
                     <GridViewColumn Header="Size (bytes)" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding FileSize, StringFormat={}{0:N0}}"
-                                       HorizontalAlignment="Right"/>
+                                           HorizontalAlignment="Right"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -101,7 +107,6 @@
                 <TextBlock Text="{Binding StatusMessage}" />
             </StatusBarItem>
         </StatusBar>
-
 
     </Grid>
 </Window>
