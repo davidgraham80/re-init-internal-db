@@ -94,7 +94,7 @@ namespace ReInitializeDatabase.Utilities
                 bool cancelSuccess = await svc.SendAsync(message, macAddress, "david.graham@navtor.com", "", new CancellationToken());
 
                 if (!cancelSuccess)
-                    throw new Exception("Could not send files, please ensure you have the correct MAC address");
+                    throw new Exception("CancelReinitViaWcf error, please ensure you have the correct MAC address");
                 
                 progressCallback?.Invoke(1, 1);
             }
