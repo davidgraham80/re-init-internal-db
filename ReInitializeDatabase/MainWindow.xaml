@@ -58,13 +58,20 @@
                 Click="Send_Click"
                 IsEnabled="{Binding CanSend}"/>
 
-        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                 Margin="0,4,0,4" Width="150"
                 Content="Check / Uncheck All"
                 Click="SelectAll_Click"
                 IsEnabled="{Binding HasFiles}"/>
 
-        <Button Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3"
+        <CheckBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
+                  Margin="8,4,8,4"
+                  VerticalAlignment="Center"
+                  Content="Skip chart update"
+                  IsChecked="{Binding SkipChartUpdate, Mode=TwoWay}"
+                  IsEnabled="{Binding IsLoadEnabled}" />
+
+        <Button Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"
                 Margin="0,4,0,4" Width="120"
                 HorizontalAlignment="Right"
                 Content="Cancel Re-init"

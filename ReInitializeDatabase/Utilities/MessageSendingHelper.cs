@@ -41,11 +41,11 @@ namespace ReInitializeDatabase.Utilities
         }
 
         internal async Task<bool> SendViaWcf(string macAddress, List<InternalDBFile> internalFiles, IReadOnlyList<InternalDBFile> filesDetailsFromServer,
-                                             Action<int, int> progressCallback = null)
+                                             Action<int, int> progressCallback = null, bool skipChartUpdate = false)
         {
             try
             {
-                CreateNavtorMessageList(internalFiles, true, filesDetailsFromServer);
+                CreateNavtorMessageList(internalFiles, true, filesDetailsFromServer, skipChartUpdate);
 
                 var svc = new InternalDbService(
                     "http://navserver2.navtor.com/ENCSync.svc",
@@ -106,7 +106,8 @@ namespace ReInitializeDatabase.Utilities
             return true;
         }
 
-        private void CreateNavtorMessageList(List<InternalDBFile> selectedFiles, bool skipSend, IReadOnlyList<InternalDBFile> _filesDetailsFromServer)
+        private void CreateNavtorMessageList(List<InternalDBFile> selectedFiles, bool skipSend, 
+                                             IReadOnlyList<InternalDBFile> _filesDetailsFromServer, bool skipChartUpdate = false)
         {
             messageList.Clear();
 
@@ -135,6 +136,7 @@ namespace ReInitializeDatabase.Utilities
                     expectedFileSize = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).FileSize,
                     crc = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).Crc,
                     totalFiles = totalFiles,
+                    skipChartUpdate = skipChartUpdate
                 });
                 c = new NavBoxCommand("ReInitDb", cmdParameter);
                 m = new NavtorMessage(c);

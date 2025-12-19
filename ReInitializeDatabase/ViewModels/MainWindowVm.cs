@@ -90,6 +90,21 @@ namespace ReInitializeDatabase.ViewModels
             }
         }
 
+        private bool _skipChartUpdate;
+
+        public bool SkipChartUpdate
+        {
+            get => _skipChartUpdate;
+            set
+            {
+                if (_skipChartUpdate == value) return;
+                _skipChartUpdate = value;
+                OnPropertyChanged(nameof(SkipChartUpdate));
+            }
+        }
+
+
+
         public bool IsSerialNumberValid => !string.IsNullOrWhiteSpace(SerialNumber);
 
         public bool HasFiles => Files.Count > 0;

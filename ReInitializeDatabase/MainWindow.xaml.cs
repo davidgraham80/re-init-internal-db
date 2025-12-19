@@ -157,7 +157,7 @@ namespace ReInitializeDatabase
                                                                (current, total) =>
                                                                {
                                                                    _vm.StatusMessage = $"Sending message {current} of {total}…";
-                                                               });
+                                                               }, _vm.SkipChartUpdate);
 
                 if(success)
                 {
