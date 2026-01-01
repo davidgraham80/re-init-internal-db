@@ -15,6 +15,9 @@ namespace ReInitializeDatabase
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IReadOnlyList<InternalDbFileManifestItem> _manifest;
+        private Guid _runId;
+        
         private MessageSendingHelper _messageHelper = new MessageSendingHelper();
         private IReadOnlyList<InternalDBFile> _filesDetailsFromServer;
 
@@ -28,7 +31,7 @@ namespace ReInitializeDatabase
 
         async Task LoadAsync()
         {
-            var svc = new  InternalDbService("http://navserver2.navtor.com/ENCSync.svc", _vm.SerialNumber);
+            var svc = new InternalDbService("http://navserver2.navtor.com/ENCSync.svc", _vm.SerialNumber);
 
             IReadOnlyList<InternalDBFile> files = await svc.GetFilesAsync(); // returns InternalDBFile[]
             _vm.Files.Clear();
@@ -88,6 +91,17 @@ namespace ReInitializeDatabase
                     _vm.Files.Clear();
                     return;
                 }
+
+                _manifest = _filesDetailsFromServer
+                            .Select(x => new InternalDbFileManifestItem
+                            {
+                                FileName = x.FileName,
+                                UrlToFile = x.Url,
+                                ExpectedFileSize = x.FileSize,
+                                Crc = x.Crc
+                            }).ToList();
+
+                _runId = Guid.NewGuid();
 
                 _vm.Files.Clear();
                 foreach(InternalDBFile f in _filesDetailsFromServer)
@@ -153,7 +167,7 @@ namespace ReInitializeDatabase
 
                 
 
-                bool success = await _messageHelper.SendViaWcf(_vm.MacAddress, internalFiles, _filesDetailsFromServer,
+                bool success = await _messageHelper.SendViaWcf(_manifest, _vm.MacAddress, internalFiles, _filesDetailsFromServer,
                                                                (current, total) =>
                                                                {
                                                                    _vm.StatusMessage = $"Sending message {current} of {total}…";

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Navtor.Message;
+using Newtonsoft.Json;
+using SendCheck.ENCSyncClient;
 using SendCheck.Poco;
 using System;
 using System.Collections.Generic;
@@ -7,8 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using Navtor.Message;
-using SendCheck.ENCSyncClient;
 
 namespace ReInitializeDatabase.Utilities
 {
@@ -40,12 +40,12 @@ namespace ReInitializeDatabase.Utilities
             }
         }
 
-        internal async Task<bool> SendViaWcf(string macAddress, List<InternalDBFile> internalFiles, IReadOnlyList<InternalDBFile> filesDetailsFromServer,
+        internal async Task<bool> SendViaWcf(IReadOnlyList<InternalDbFileManifestItem> _manifest, string macAddress, List<InternalDBFile> internalFiles, IReadOnlyList<InternalDBFile> filesDetailsFromServer,
                                              Action<int, int> progressCallback = null, bool skipChartUpdate = false)
         {
             try
             {
-                CreateNavtorMessageList(internalFiles, true, filesDetailsFromServer, skipChartUpdate);
+                CreateNavtorMessageList(_manifest, internalFiles, true, filesDetailsFromServer, skipChartUpdate);
 
                 var svc = new InternalDbService(
                     "http://navserver2.navtor.com/ENCSync.svc",
@@ -106,7 +106,7 @@ namespace ReInitializeDatabase.Utilities
             return true;
         }
 
-        private void CreateNavtorMessageList(List<InternalDBFile> selectedFiles, bool skipSend, 
+        private void CreateNavtorMessageList(IReadOnlyList<InternalDbFileManifestItem> _manifest, List<InternalDBFile> selectedFiles, bool skipSend, 
                                              IReadOnlyList<InternalDBFile> _filesDetailsFromServer, bool skipChartUpdate = false)
         {
             messageList.Clear();
@@ -119,10 +119,29 @@ namespace ReInitializeDatabase.Utilities
             if (preferredNumOfFilesToSend > _filesDetailsFromServer.Count/* Length*/)
                 throw new ArgumentException($"ERROR : preferredNumOfFilesToSend file count {preferredNumOfFilesToSend} is greater than the _filesDetailsFromServer file count {_filesDetailsFromServer.Count}");
 
-            if (!selectedFiles.Any() && preferredNumOfFilesToSend + 1 > _filesDetailsFromServer.Count/* Length*/)
+            if (!selectedFiles.Any() && preferredNumOfFilesToSend + 1 > _filesDetailsFromServer.Count)
                 throw new ArgumentException($"ERROR : If not including the database file then set the count preferredNumOfFilesToSend file count of: {preferredNumOfFilesToSend} to be one less than the _filesDetailsFromServer file count of: {_filesDetailsFromServer.Count}");
 
             totalFiles = preferredNumOfFilesToSend;
+
+            int iterator = 0; //when iterator is zero include the extra manifest in the send
+
+            bool isFirstMessage = iterator == 0;
+            Guid runId = Guid.NewGuid();
+            string manifestText = JsonConvert.SerializeObject(_manifest);
+
+            List<InternalDbFileManifestItem> manifest = null;
+            if (isFirstMessage)
+            {
+                manifest = _filesDetailsFromServer
+                           .Select(x => new InternalDbFileManifestItem
+                           {
+                               FileName = x.FileName,
+                               UrlToFile = x.Url,
+                               ExpectedFileSize = x.FileSize,
+                               Crc = x.Crc
+                           }).ToList();
+            }
 
             foreach (var fileToSend in selectedFiles)
             {
@@ -136,12 +155,17 @@ namespace ReInitializeDatabase.Utilities
                     expectedFileSize = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).FileSize,
                     crc = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).Crc,
                     totalFiles = totalFiles,
-                    skipChartUpdate = skipChartUpdate
+                    skipChartUpdate = skipChartUpdate,
+                    isFirstMessage = isFirstMessage,
+                    runId = runId,
+                    manifest = isFirstMessage ? manifest : new List<InternalDbFileManifestItem>()
                 });
                 c = new NavBoxCommand("ReInitDb", cmdParameter);
                 m = new NavtorMessage(c);
 
                 messageList.Add(m);
+
+                iterator++;
             }
             VerifyMessages();
         }
