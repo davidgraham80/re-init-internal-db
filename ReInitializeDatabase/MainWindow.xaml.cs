@@ -16,7 +16,7 @@ namespace ReInitializeDatabase
     public partial class MainWindow : Window
     {
         private IReadOnlyList<InternalDbFileManifestItem> _manifest;
-        private Guid _runId;
+        //private Guid _runId;
         
         private MessageSendingHelper _messageHelper = new MessageSendingHelper();
         private IReadOnlyList<InternalDBFile> _filesDetailsFromServer;
@@ -101,7 +101,7 @@ namespace ReInitializeDatabase
                                 Crc = x.Crc
                             }).ToList();
 
-                _runId = Guid.NewGuid();
+                //_runId = Guid.NewGuid();
 
                 _vm.Files.Clear();
                 foreach(InternalDBFile f in _filesDetailsFromServer)

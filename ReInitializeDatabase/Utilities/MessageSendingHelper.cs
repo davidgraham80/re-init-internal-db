@@ -30,6 +30,34 @@ namespace ReInitializeDatabase.Utilities
             if (countReInitDb > 0 && countCancelReInitDb > 0)
                 throw new ArgumentException("Please do not mix the sending of ReInitDb and CancelReinitDb messages, either one or the other.");
 
+            List<CommandParameterData> parsed = messageList
+                                                .Select(m =>
+                                                {
+                                                    var cmd = m.GetMessage<NavBoxCommand>();
+                                                    return JsonConvert.DeserializeObject<CommandParameterData>(cmd.CommandParameter);
+                                                }).ToList();
+
+            // totalFiles must match count
+            if (parsed.Any(p => p.TotalFiles != countReInitDb))
+                throw new ArgumentException("TotalFiles mismatch between JSON and message count.");
+
+            // runId must be present and consistent
+            if (parsed.Any(p => p.RunId == Guid.Empty))
+                throw new ArgumentException("RunId is Guid.Empty in one or more messages.");
+            var runId = parsed.First().RunId;
+            if (parsed.Any(p => p.RunId != runId))
+                throw new ArgumentException("RunId differs between messages.");
+
+            // first-message rules
+            var firstFlags = parsed.Count(p => p.IsFirstMessage);
+            if (firstFlags != 1)
+                throw new ArgumentException($"Expected exactly 1 first message, found {firstFlags}.");
+
+            var first = parsed.First(p => p.IsFirstMessage);
+            if (first.Manifest == null || first.Manifest.Items.Count == 0)
+                throw new ArgumentException("First message must include manifest.");
+
+
             foreach (NavtorMessage navtorMessage in messageList)
             {
                 NavBoxCommand msg = navtorMessage.GetMessage<NavBoxCommand>();
@@ -106,68 +134,176 @@ namespace ReInitializeDatabase.Utilities
             return true;
         }
 
-        private void CreateNavtorMessageList(IReadOnlyList<InternalDbFileManifestItem> _manifest, List<InternalDBFile> selectedFiles, bool skipSend, 
-                                             IReadOnlyList<InternalDBFile> _filesDetailsFromServer, bool skipChartUpdate = false)
+        private void CreateNavtorMessageList(
+    IReadOnlyList<InternalDbFileManifestItem> _manifest, // (not needed anymore, but kept to avoid signature changes)
+    List<InternalDBFile> selectedFiles,
+    bool skipSend,
+    IReadOnlyList<InternalDBFile> _filesDetailsFromServer,
+    bool skipChartUpdate = false)
         {
             messageList.Clear();
 
-            int preferredNumOfFilesToSend = 0;
+            if (selectedFiles == null) throw new ArgumentNullException(nameof(selectedFiles));
+            if (_filesDetailsFromServer == null) throw new ArgumentNullException(nameof(_filesDetailsFromServer));
 
-            if (selectedFiles.Count > 0)
-                preferredNumOfFilesToSend = selectedFiles.Count;
-
-            if (preferredNumOfFilesToSend > _filesDetailsFromServer.Count/* Length*/)
-                throw new ArgumentException($"ERROR : preferredNumOfFilesToSend file count {preferredNumOfFilesToSend} is greater than the _filesDetailsFromServer file count {_filesDetailsFromServer.Count}");
-
-            if (!selectedFiles.Any() && preferredNumOfFilesToSend + 1 > _filesDetailsFromServer.Count)
-                throw new ArgumentException($"ERROR : If not including the database file then set the count preferredNumOfFilesToSend file count of: {preferredNumOfFilesToSend} to be one less than the _filesDetailsFromServer file count of: {_filesDetailsFromServer.Count}");
-
+            int preferredNumOfFilesToSend = selectedFiles.Count;
             totalFiles = preferredNumOfFilesToSend;
 
-            int iterator = 0; //when iterator is zero include the extra manifest in the send
+            // Base URL used by NavBox when it downloads individual files.
+            const string baseUrl = "https://navstorage.navtor.com/navsyncdbfiles/";
 
-            bool isFirstMessage = iterator == 0;
-            Guid runId = Guid.NewGuid();
-            string manifestText = JsonConvert.SerializeObject(_manifest);
+            // Build a quick lookup so we don't keep calling First(...)
+            var serverByName = _filesDetailsFromServer
+                .Where(x => x != null && !string.IsNullOrWhiteSpace(x.FileName))
+                .ToDictionary(x => x.FileName, StringComparer.OrdinalIgnoreCase);
 
-            List<InternalDbFileManifestItem> manifest = null;
-            if (isFirstMessage)
+            // Validate all selected files exist in server list
+            foreach (var f in selectedFiles)
             {
-                manifest = _filesDetailsFromServer
-                           .Select(x => new InternalDbFileManifestItem
-                           {
-                               FileName = x.FileName,
-                               UrlToFile = x.Url,
-                               ExpectedFileSize = x.FileSize,
-                               Crc = x.Crc
-                           }).ToList();
+                if (f == null || string.IsNullOrWhiteSpace(f.FileName))
+                    continue;
+
+                if (!serverByName.ContainsKey(f.FileName))
+                    throw new ArgumentException($"Selected file '{f.FileName}' not present in _filesDetailsFromServer");
             }
 
+            // Build manifest items from the server list (not from "selectedFiles")
+            // so NavBox can validate / plan using full knowledge.
+            var manifestItems = _filesDetailsFromServer
+                .Where(x => x != null && !string.IsNullOrWhiteSpace(x.FileName))
+                .Select(x => new InternalDbFileManifestItem
+                {
+                    FileName = x.FileName,
+                    UrlToFile = x.Url,          // RELATIVE (e.g. "6N/2025-51/NavSync001.DAT")
+                    ExpectedFileSize = x.FileSize,
+                    Crc = x.Crc
+                })
+                .ToList();
+
+            // Envelope (header + items) + serialize once.
+            // Uses your ManifestBuilder implementation.
+            var envelope = ManifestBuilder.Build(items: manifestItems, baseUrl: baseUrl);
+            string manifestJson = JsonConvert.SerializeObject(envelope);
+
+            Guid runId = Guid.NewGuid();
+
+            int iterator = 0;
             foreach (var fileToSend in selectedFiles)
             {
-                if (string.IsNullOrEmpty(fileToSend.FileName))
+                if (fileToSend == null || string.IsNullOrWhiteSpace(fileToSend.FileName))
                     continue;
+
+                bool isFirstMessage = (iterator == 0);
+
+                var serverItem = serverByName[fileToSend.FileName];
 
                 string cmdParameter = JsonConvert.SerializeObject(new
                 {
-                    file = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).FileName,
-                    urlToFile = "https://navstorage.navtor.com/navsyncdbfiles/" + _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).Url,
-                    expectedFileSize = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).FileSize,
-                    crc = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).Crc,
+                    file = serverItem.FileName,
+                    urlToFile = baseUrl + serverItem.Url,   // FULL URL for the specific file download
+                    expectedFileSize = serverItem.FileSize,
+                    crc = serverItem.Crc,
+
                     totalFiles = totalFiles,
                     skipChartUpdate = skipChartUpdate,
                     isFirstMessage = isFirstMessage,
                     runId = runId,
-                    manifest = isFirstMessage ? manifest : new List<InternalDbFileManifestItem>()
+
+                    // IMPORTANT: only include on first message
+                    manifestJson = isFirstMessage ? manifestJson : null
                 });
+
                 c = new NavBoxCommand("ReInitDb", cmdParameter);
                 m = new NavtorMessage(c);
-
                 messageList.Add(m);
 
                 iterator++;
             }
+
             VerifyMessages();
         }
+
+
+        //private void CreateNavtorMessageList(IReadOnlyList<InternalDbFileManifestItem> _manifest, List<InternalDBFile> selectedFiles, bool skipSend, 
+        //                                     IReadOnlyList<InternalDBFile> _filesDetailsFromServer, bool skipChartUpdate = false)
+        //{
+        //    messageList.Clear();
+
+        //    int preferredNumOfFilesToSend = 0;
+
+        //    if (selectedFiles.Count > 0)
+        //        preferredNumOfFilesToSend = selectedFiles.Count;
+
+        //    if (preferredNumOfFilesToSend > _filesDetailsFromServer.Count/* Length*/)
+        //        throw new ArgumentException($"ERROR : preferredNumOfFilesToSend file count {preferredNumOfFilesToSend} is greater than the _filesDetailsFromServer file count {_filesDetailsFromServer.Count}");
+
+        //    if (!selectedFiles.Any() && preferredNumOfFilesToSend + 1 > _filesDetailsFromServer.Count)
+        //        throw new ArgumentException($"ERROR : If not including the database file then set the count preferredNumOfFilesToSend file count of: {preferredNumOfFilesToSend} to be one less than the _filesDetailsFromServer file count of: {_filesDetailsFromServer.Count}");
+
+        //    totalFiles = preferredNumOfFilesToSend;
+
+        //    int iterator = 0; //when iterator is zero include the extra manifest in the send
+
+        //    bool isFirstMessage = iterator == 0;
+        //    Guid runId = Guid.NewGuid();
+        //    string manifestText = JsonConvert.SerializeObject(_manifest);
+
+        //    List<InternalDbFileManifestItem> manifest = null;
+        //    if (isFirstMessage)
+        //    {
+        //        //original code
+        //        manifest = _filesDetailsFromServer
+        //                   .Select(x => new InternalDbFileManifestItem
+        //                   {
+        //                       FileName = x.FileName,
+        //                       UrlToFile = x.Url,
+        //                       ExpectedFileSize = x.FileSize,
+        //                       Crc = x.Crc
+        //                   }).ToList();
+
+        //        var first = new CommandParameterData
+        //        {
+        //            RunId = runId,
+        //            IsFirstMessage = true,
+        //            TotalFiles = selectedFiles.Count,
+
+        //            Manifest = ManifestBuilder.BuildEnvelope(
+        //                items: manifest,
+        //                baseUrl: "https://navstorage.navtor.com/navsyncdbfiles/"
+        //            )
+        //        };
+
+        //    }
+
+        //    foreach (var fileToSend in selectedFiles)
+        //    {
+        //        if (string.IsNullOrEmpty(fileToSend.FileName))
+        //            continue;
+
+        //        isFirstMessage = iterator == 0;
+
+        //        string cmdParameter = JsonConvert.SerializeObject(new
+        //        {
+        //            file = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).FileName,
+        //            urlToFile = "https://navstorage.navtor.com/navsyncdbfiles/" + _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).Url,
+        //            expectedFileSize = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).FileSize,
+        //            crc = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).Crc,
+        //            totalFiles = totalFiles,
+        //            skipChartUpdate = skipChartUpdate,
+        //            isFirstMessage = isFirstMessage,
+        //            runId = runId,
+        //            manifest = isFirstMessage ? manifest : null
+        //        });
+
+        //        c = new NavBoxCommand("ReInitDb", cmdParameter);
+        //        m = new NavtorMessage(c);
+
+        //        messageList.Add(m);
+
+        //        iterator++;
+        //    }
+        //    VerifyMessages();
+        //}
+
     }
 }
