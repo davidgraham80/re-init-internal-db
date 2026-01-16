@@ -55,7 +55,7 @@ namespace ReInitializeDatabase.ViewModels
         private string _serialNumber;
         public string SerialNumber
         {
-            get => _serialNumber;
+            get => _serialNumber; //"12A456798A7D"
             set
             {
                 if (_serialNumber == value) return;
@@ -69,7 +69,7 @@ namespace ReInitializeDatabase.ViewModels
         private string _macAddress;
         public string MacAddress
         {
-            get => _macAddress;
+            get => _macAddress; //"F47B091068DC"
             set
             {
                 if (_macAddress == value) return;

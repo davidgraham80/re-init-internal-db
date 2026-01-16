@@ -32,5 +32,6 @@ namespace SendCheck.Poco
         public string UrlToFile { get; set; }
         public long ExpectedFileSize { get; set; }
         public int Crc { get; set; }
+        public bool Sent { get; set; }
     }
 }

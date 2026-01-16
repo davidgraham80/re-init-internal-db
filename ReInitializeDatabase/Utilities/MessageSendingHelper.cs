@@ -133,14 +133,7 @@ namespace ReInitializeDatabase.Utilities
             List<InternalDbFileManifestItem> manifest = null;
             if (isFirstMessage)
             {
-                manifest = _filesDetailsFromServer
-                           .Select(x => new InternalDbFileManifestItem
-                           {
-                               FileName = x.FileName,
-                               UrlToFile = x.Url,
-                               ExpectedFileSize = x.FileSize,
-                               Crc = x.Crc
-                           }).ToList();
+                manifest = _manifest.ToList();
             }
 
             foreach (var fileToSend in selectedFiles)
@@ -150,15 +143,16 @@ namespace ReInitializeDatabase.Utilities
 
                 string cmdParameter = JsonConvert.SerializeObject(new
                 {
+                    sourceSender = "WPF-App-v1.0.0.0",
                     file = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).FileName,
                     urlToFile = "https://navstorage.navtor.com/navsyncdbfiles/" + _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).Url,
                     expectedFileSize = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).FileSize,
                     crc = _filesDetailsFromServer.First(x => x.FileName == fileToSend.FileName).Crc,
                     totalFiles = totalFiles,
                     skipChartUpdate = skipChartUpdate,
-                    isFirstMessage = isFirstMessage,
+                    isFirstMessage = iterator == 0,
                     runId = runId,
-                    manifest = isFirstMessage ? manifest : new List<InternalDbFileManifestItem>()
+                    manifest = iterator == 0 ? manifest : null
                 });
                 c = new NavBoxCommand("ReInitDb", cmdParameter);
                 m = new NavtorMessage(c);

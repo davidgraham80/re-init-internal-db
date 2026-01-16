@@ -165,7 +165,26 @@ namespace ReInitializeDatabase
                                                      .Select(f => (InternalDBFile)f.Source)
                                                      .ToList();
 
-                
+                foreach(InternalDbFileManifestItem manifestItem in _manifest)
+                {
+                    InternalDBFile isCheckedItem = internalFiles.FirstOrDefault(x => x.FileName == manifestItem.FileName);
+                    if(isCheckedItem != null)
+                    {
+                        InternalDbFileManifestItem manifestToUpdate = _manifest.FirstOrDefault(m => m.FileName == isCheckedItem.FileName);
+                        if(manifestToUpdate != null)
+                        {
+                            manifestToUpdate.Sent = true;
+                        }
+                        else
+                        {
+                            manifestItem.Sent = false;
+                        }
+                    }
+                    else
+                    {
+                        manifestItem.Sent = false;
+                    }
+                }
 
                 bool success = await _messageHelper.SendViaWcf(_manifest, _vm.MacAddress, internalFiles, _filesDetailsFromServer,
                                                                (current, total) =>
